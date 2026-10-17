@@ -25,11 +25,6 @@ function Navbar (){
                         Contacto
                     </Link>
                 </div>
-                <div className="navbar nav">
-                    <Link className="nav-link text-white" to="/login">
-                        Iniciar Sesión
-                    </Link>
-                </div>
             </div>
         </nav>
     )
