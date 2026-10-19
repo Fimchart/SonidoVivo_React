@@ -76,20 +76,33 @@ const listaProductos = [
 
 function Productos() {
   return (
-    <div className="container mt-4">
-      <h1 className="mb-4">Catálogo - Sonido Vivo</h1>
+    <div className="bg-light min-vh-100 pb-5">
+      {/* Encabezado del Catálogo */}
+      <div className="bg-dark text-white text-center py-4 mb-4 shadow-sm">
+        <div className="container">
+          <h1 className="display-5 fw-bold text-warning mb-1">
+            Catálogo - Sonido Vivo
+          </h1>
+          <p className="text-secondary mb-0">
+            Explora nuestra selección completa de instrumentos y accesorios
+          </p>
+        </div>
+      </div>
 
-      <div className="d-flex flex-wrap gap-3 justify-content-center">
-        {listaProductos.map((prod) => (
-          <CardProducto
-            key={prod.codigo}
-            id={prod.id}
-            titulo={prod.titulo}
-            descripcion={prod.descripcion}
-            precio={prod.precio}
-            imagen={`/imagenes/productos/${prod.codigo}.jpg`}
-          />
-        ))}
+      {/* Contenedor de las Cards */}
+      <div className="container">
+        <div className="d-flex flex-wrap gap-3 justify-content-center">
+          {listaProductos.map((prod) => (
+            <CardProducto
+              key={prod.codigo}
+              id={prod.id}
+              titulo={prod.titulo}
+              descripcion={prod.descripcion}
+              precio={prod.precio}
+              imagen={`/imagenes/productos/${prod.codigo}.jpg`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ function Boton({id}: BotonProps){
     return (
         <Link
             to={`/producto/${id}`}
-            className="btn btn-primary"
+            className="btn btn-warning fw-bold text-dark w-100 py-2"
         >
             Ver producto
         </Link>

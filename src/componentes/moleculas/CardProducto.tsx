@@ -31,10 +31,9 @@ function CardProducto ({id, titulo, descripcion, precio, imagen}: CardProps){
                         ${precio}
                     </p>
 
-                    <div className="mt-auto">{/*Empuja el botón hacia abajo para mantener todos los botones alineados*/}
-                        <Boton id={id}/>
+                    <div className="mt-auto">
+                    <Boton id={id} className="btn btn-warning fw-bold text-dark w-100 py-2" />
                     </div>
-                    
                 </div>
         </div>
     )
