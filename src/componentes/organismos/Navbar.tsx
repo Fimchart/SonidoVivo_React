@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
-function Navbar (){
+function Navbar() {
     return (
-        <nav className="navbar navbar-expand bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div className="container">
-                <span className="navbar-brand text-white">
-                    Mi tienda
-                </span>
+                <Link className="navbar-brand fw-bold text-warning" to="/">
+                    Sonido Vivo
+                </Link>
 
-                <div className="navbar-nav">
+                <div className="navbar-nav ms-auto gap-2">
                     <Link className="nav-link text-white" to="/">
                         Inicio
                     </Link>
@@ -18,7 +18,7 @@ function Navbar (){
                     </Link>
 
                     <Link className="nav-link text-white" to="/quienessomos">
-                        Quienes somos
+                        Quiénes Somos
                     </Link>
 
                     <Link className="nav-link text-white" to="/contacto">
@@ -27,7 +27,7 @@ function Navbar (){
                 </div>
             </div>
         </nav>
-    )
+    );
 }
 
 export default Navbar;
