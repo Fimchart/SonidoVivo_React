@@ -32,7 +32,7 @@ function CardProducto ({id, titulo, descripcion, precio, imagen}: CardProps){
                     </p>
 
                     <div className="mt-auto">
-                    <Boton id={id} className="btn btn-warning fw-bold text-dark w-100 py-2" />
+                    <Boton id={id}/>
                     </div>
                 </div>
         </div>
