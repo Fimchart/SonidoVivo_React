@@ -42,8 +42,8 @@ function DetalleProducto() {
 
   return (
     <div className="container py-5 text-white">
-      {/* Botón Volver */}
-      <div className="row mb-4">
+      {/* Botón Volver con mayor margen (mb-5) */}
+      <div className="row mb-5">
         <div className="col-12 col-lg-10 mx-auto">
           <Link to="/productos" className="btn btn-outline-warning fw-bold">
             ← Volver al catálogo
@@ -54,15 +54,16 @@ function DetalleProducto() {
       {/* Tarjeta Detallada Centrada */}
       <div className="row justify-content-center">
         <div className="col-12 col-lg-10">
-          <div className="card bg-dark text-white border-secondary shadow-lg p-4 rounded-4">
+          <div className="card text-white border-2 border-warning shadow p-4 rounded-4"
+               style={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}>
             <div className="row g-4">
               
-              {/* Imagen del Producto */}
+              {/* Imagen del Producto con marco encuadrado */}
               <div className="col-md-5 text-center d-flex align-items-center justify-content-center">
                 <img 
                   src={producto.imagen} 
                   alt={producto.titulo}
-                  className="img-fluid rounded-3 bg-white p-3 shadow-sm w-100"
+                  className="img-fluid rounded-4 bg-white p-3 shadow border border-secondary w-100"
                   style={{ maxHeight: '380px', objectFit: 'contain' }}
                 />
               </div>
@@ -70,7 +71,6 @@ function DetalleProducto() {
               {/* Información Ampliada */}
               <div className="col-md-7 d-flex flex-column justify-content-between">
                 <div>
-                  {/* Categoría y Stock en lugar del código */}
                   <div className="d-flex gap-2 mb-2">
                     <span className="badge bg-secondary text-white px-3 py-2 fw-semibold">
                       {producto.categoria}
