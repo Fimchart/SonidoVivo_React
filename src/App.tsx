@@ -5,6 +5,7 @@ import Inicio from './paginas/Inicio';
 import Productos from './paginas/Productos';
 import QuienesSomos from './paginas/QuienesSomos';
 import Contacto from './paginas/Contacto';
+import DetalleProducto from './paginas/DetalleProducto';
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
             path='/contacto'
             element={<Contacto />}
           />
+
+          <Route
+          path="/producto/:id"
+          element={<DetalleProducto/>}
+        />
         </Routes>
       </main>
 
