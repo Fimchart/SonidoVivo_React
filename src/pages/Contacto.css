@@ -10,8 +10,9 @@
 
 .contact-icon {
     color: var(--sv-primary);
-    font-size: 24px;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .contact-input {
@@ -20,6 +21,11 @@
     color: white !important;
     padding: 12px 15px;
     border-radius: 10px;
+}
+
+/* REGLA NUEVA: Hace que el texto de fondo del input sea visible */
+.contact-input::placeholder {
+    color: #7a7a85 !important;
 }
 
 .contact-input:focus {
