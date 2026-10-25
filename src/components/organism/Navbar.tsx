@@ -1,10 +1,24 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import './Navbar.css'; // <-- IMPORTANTE: Importar los estilos
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CardContext";
+import './Navbar.css';
 
 function Navbar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
     const cerrarMenu = () => setMenuAbierto(false);
+    
+    const { usuario, logout } = useAuth();
+    const { totalItems, vaciarCarrito } = useCart();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        localStorage.removeItem('sv_user');
+        vaciarCarrito();
+        navigate('/');
+        cerrarMenu();
+    };
 
     return (
         <header className="site-header">
@@ -21,39 +35,40 @@ function Navbar() {
                 <nav className={`main-nav ${menuAbierto ? 'active' : ''}`}>
                     <ul className="nav-list">
                         <li>
-                            <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>
-                                Inicio
-                            </NavLink>
+                            <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Inicio</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/productos" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>
-                                Productos
-                            </NavLink>
+                            <NavLink to="/productos" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Productos</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/quienessomos" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>
-                                Quiénes Somos
-                            </NavLink>
+                            <NavLink to="/quienessomos" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Quiénes Somos</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/contacto" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>
-                                Contacto
-                            </NavLink>
+                            <NavLink to="/contacto" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Contacto</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/admin" className={({ isActive }) => isActive ? "nav-link active text-warning" : "nav-link text-warning"} onClick={cerrarMenu}>
-                                Admin
-                            </NavLink>
+                            <NavLink to="/admin" className={({ isActive }) => isActive ? "nav-link active text-warning" : "nav-link text-warning"} onClick={cerrarMenu}>Admin</NavLink>
                         </li>
                     </ul>
                 </nav>
 
                 {/* Acciones */}
                 <div className="header-actions">
-                    <button className="header-action">
+                    <button className="header-action" title="Carrito">
                         🛒
-                        <span className="cart-count">0</span>
+                        <span className="cart-count">{totalItems}</span>
                     </button>
+
+                    {usuario ? (
+                        <button onClick={handleLogout} className="btn btn-outline-danger btn-sm ms-2">
+                            Salir
+                        </button>
+                    ) : (
+                        <NavLink to="/login" className="btn btn-outline-warning btn-sm ms-2" onClick={cerrarMenu}>
+                            Ingresar
+                        </NavLink>
+                    )}
+
                     <button className="menu-toggle" onClick={() => setMenuAbierto(!menuAbierto)}>
                         {menuAbierto ? '✖' : '☰'}
                     </button>
@@ -63,4 +78,5 @@ function Navbar() {
     );
 }
 
+// ¡ESTA LÍNEA FALTABA!
 export default Navbar;

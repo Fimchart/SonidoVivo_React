@@ -1,21 +1,20 @@
-// src/App.tsx
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/organism/Navbar';
-import Footer from './components/organism/Footer'; // <-- Importar Footer
+import Footer from './components/organism/Footer';
 import Inicio from './pages/Inicio';
 import Productos from './pages/Productos';
 import ProductoDetalle from './pages/ProductoDetalle';
 import QuienesSomos from './pages/QuienesSomos';
 import Contacto from './pages/Contacto';
 import Admin from './pages/Admin';
+import Login from './pages/Login'; // <-- Asegúrate de importar Login
 
 function App() {
   return (
-    // min-vh-100 y flex-column hacen que el footer siempre quede abajo
     <div className="d-flex flex-column min-vh-100 bg-dark text-white">
       <Navbar />
 
-      <div className="flex-grow-1"> {/* Este div empuja el footer hacia abajo */}
+      <div className="flex-grow-1">
         <Routes>
           <Route path='/' element={<Inicio />} />
           <Route path='/productos' element={<Productos />} />
@@ -23,6 +22,7 @@ function App() {
           <Route path='/quienessomos' element={<QuienesSomos />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/login' element={<Login />} /> {/* <-- Asegúrate de tener esta ruta */}
         </Routes>
       </div>
 

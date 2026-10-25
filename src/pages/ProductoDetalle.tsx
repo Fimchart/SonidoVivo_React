@@ -1,12 +1,16 @@
-// src/pages/ProductoDetalle.tsx
 import { useParams, useNavigate } from 'react-router-dom';
 import { productoService } from '../Service/ProductoService';
+import { useCart } from '../context/CardContext';
+import { useAuth } from '../context/AuthContext';
 import Boton from '../components/atoms/Boton';
 
-function ProductoDetalle() { // <-- Aquí NO debe haber props
+function ProductoDetalle() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { agregarAlCarrito } = useCart();
+  const { usuario } = useAuth();
   
+  // Buscamos el producto (Faltaba esta línea)
   const producto = productoService.getById(Number(id));
 
   if (!producto) {
@@ -22,6 +26,16 @@ function ProductoDetalle() { // <-- Aquí NO debe haber props
 
   const formatearPrecio = (valor: number) => {
     return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(valor);
+  };
+
+  const handleComprar = () => {
+    if (!usuario) {
+      alert("¡Debes iniciar sesión para comprar!");
+      navigate('/login');
+      return;
+    }
+    agregarAlCarrito(producto);
+    alert(`${producto.titulo} agregado al carrito.`);
   };
 
   return (
@@ -42,9 +56,12 @@ function ProductoDetalle() { // <-- Aquí NO debe haber props
           <p className="text-light mt-3">{producto.descripcion}</p>
           <h3 className="text-warning mt-3">{formatearPrecio(producto.precio)}</h3>
           
-          <div className="mt-4">
+          <div className="mt-4 d-flex gap-3">
+            <Boton onClick={handleComprar} variant="primary">
+              Agregar al Carrito 🛒
+            </Boton>
             <Boton onClick={() => navigate('/productos')} variant="secondary">
-              Volver al catálogo
+              Volver
             </Boton>
           </div>
         </div>
@@ -53,4 +70,5 @@ function ProductoDetalle() { // <-- Aquí NO debe haber props
   );
 }
 
+// ¡ESTA LÍNEA FALTABA!
 export default ProductoDetalle;
