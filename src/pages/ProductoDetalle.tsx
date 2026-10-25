@@ -3,11 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { productoService } from '../Service/ProductoService';
 import Boton from '../components/atoms/Boton';
 
-function ProductoDetalle() {
+function ProductoDetalle() { // <-- Aquí NO debe haber props
   const { id } = useParams();
   const navigate = useNavigate();
   
-  // Buscamos el producto por ID (convertimos el string de la URL a número)
   const producto = productoService.getById(Number(id));
 
   if (!producto) {

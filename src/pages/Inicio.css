@@ -1,0 +1,40 @@
+/* src/pages/Inicio.css */
+.hero {
+    position: relative; min-height: 680px; display: flex; align-items: center; overflow: hidden;
+    background: linear-gradient(90deg, rgba(7, 7, 9, 0.98) 0%, rgba(7, 7, 9, 0.88) 40%, rgba(7, 7, 9, 0.45) 75%, rgba(7, 7, 9, 0.7) 100%), url("../assets/img/banners/hero-sonido-vivo.jpg") center / cover no-repeat;
+}
+.hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle at 75% 45%, rgba(255, 90, 31, 0.18), transparent 35%); }
+.hero-container { position: relative; z-index: 1; }
+.hero-content { width: min(650px, 100%); }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; color: var(--sv-primary); font-size: 12px; font-weight: 800; letter-spacing: 1.8px; }
+.hero h1 { margin: 18px 0; font-family: "Montserrat", sans-serif; font-size: clamp(42px, 6vw, 76px); line-height: 0.98; letter-spacing: -3px; }
+.hero h1 span { display: block; color: var(--sv-primary); }
+.hero p { max-width: 570px; margin: 0 0 35px; color: #c4c4ca; font-size: 18px; line-height: 1.7; }
+.hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+/* Beneficios */
+.benefits { background: var(--sv-dark-soft); border-bottom: 1px solid var(--sv-border); }
+.benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.benefit-card { min-height: 130px; display: flex; align-items: center; gap: 16px; padding: 25px; border-right: 1px solid var(--sv-border); }
+.benefit-card:last-child { border-right: 0; }
+.benefit-icon { width: 45px; height: 45px; flex-shrink: 0; display: grid; place-items: center; border-radius: 12px; background: rgba(255, 90, 31, 0.1); color: var(--sv-primary); }
+.benefit-card h2 { margin: 0 0 5px; font-size: 14px; }
+.benefit-card p { margin: 0; color: var(--sv-muted); font-size: 12px; line-height: 1.5; }
+
+/* Responsive Inicio */
+@media (max-width: 1024px) {
+    .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+    .benefit-card:nth-child(2) { border-right: 0; }
+    .benefit-card:nth-child(-n + 2) { border-bottom: 1px solid var(--sv-border); }
+}
+
+@media (max-width: 767px) {
+    .hero { min-height: 610px; background-position: 65% center; }
+    .hero h1 { font-size: 43px; letter-spacing: -2px; }
+    .hero p { font-size: 15px; }
+    .hero-actions { align-items: stretch; flex-direction: column; }
+    .hero-actions .btn { width: 100%; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-card { border-right: 0; border-bottom: 1px solid var(--sv-border); }
+    .benefit-card:last-child { border-bottom: 0; }
+}

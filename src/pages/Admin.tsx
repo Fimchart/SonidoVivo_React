@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { productoService } from '../Service/ProductoService';
 import type { Producto } from '../data/Producto';
-import Boton from '../components/atoms/Boton';
 
 const formInicial = {
   codigo: '',

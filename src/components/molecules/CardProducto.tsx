@@ -1,4 +1,5 @@
 import Boton from '../atoms/Boton';
+import './CardProducto.css'; // <-- IMPORTANTE: Importar los estilos
 
 interface CardProps {
     id: number;
@@ -6,42 +7,33 @@ interface CardProps {
     descripcion: string;
     precio: number;
     imagen: string;
-    categoria: string; // <-- Asegúrate de incluir la categoría en las props
+    categoria: string;
 }
 
-function CardProducto ({id, titulo, descripcion, precio, imagen, categoria}: CardProps){
+function CardProducto({ id, titulo, descripcion, precio, imagen, categoria }: CardProps) {
+    const precioFormateado = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(precio);
 
     return (
-        <div className="card" style={{width: '20rem'}}>
-            <img
-                src={imagen}
-                className="card-img-top"
-                alt={titulo}
-                style={{height: '200px', objectFit: 'contain'}}
-            />
-                <div className="card-body d-flex flex-column">{/*Organizamos el contenido de la Card de forma vertical*/}
-                    <h5 className="card-tittle">
-                        {titulo}
-                    </h5>
-
-                    <p className="card-text">
-                        {descripcion}
-                    </p>
-
-                    <p className="card-text">
-                        ${precio}
-                    </p>
-                    <p className="card-text">
-                        {categoria}
-                    </p>
-
-                    <div className="mt-auto">{/*Empuja el botón hacia abajo para mantener todos los botones alineados*/}
-                        <Boton id={id}/>
-                    </div>
-                    
+        <div className="product-card">
+            <div className="product-image">
+                <span className="product-badge">{categoria}</span>
+                <img src={imagen} alt={titulo} />
+            </div>
+            
+            <div className="product-info">
+                <span className="product-category">{categoria}</span>
+                <h3>{titulo}</h3>
+                <p className="product-description">{descripcion}</p>
+                
+                <div className="product-footer">
+                    <span className="product-price">{precioFormateado}</span>
+                    <Boton to={`/producto/${id}`} variant="primary">
+                        Ver más
+                    </Boton>
                 </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default CardProducto;

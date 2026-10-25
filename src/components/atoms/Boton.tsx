@@ -1,17 +1,31 @@
+// src/components/atoms/Boton.tsx
 import { Link } from "react-router-dom";
+import type { ReactNode } from "react";
 
 interface BotonProps {
-    id: number;
+    children: ReactNode;
+    to?: string;
+    onClick?: () => void;
+    variant?: 'primary' | 'secondary' | 'danger' | 'warning';
+    type?: "button" | "submit" | "reset";
 }
 
-function Boton({id}: BotonProps){
+function Boton({ children, to, onClick, variant = 'primary', type = "button" }: BotonProps) {
+    const btnClass = `btn btn-${variant}`;
+
+    if (to) {
+        return (
+            <Link to={to} className={btnClass}>
+                {children}
+            </Link>
+        );
+    }
+
     return (
-        <Link
-            to={`/producto/${id}`}
-            className="btn btn-primary"
-        >
-            Ver producto
-        </Link>
-    )
+        <button type={type} onClick={onClick} className={btnClass}>
+            {children}
+        </button>
+    );
 }
+
 export default Boton;
