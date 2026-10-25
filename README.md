@@ -1,75 +1,85 @@
-# React + TypeScript + Vite
+# 🎸 Sonido Vivo - E-commerce de Instrumentos Musicales
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+| Campo | Detalle |
+| :--- | :--- |
+| **Alumnos** | Thomas Escobar, Matias Pavez |
+| **Docente** | Cristian Vega |
+| **Asignatura** | Desarrollo Fullstack II — DSY1104 |
+| **Stack** | React 19 · Vite · TypeScript · React Router · Bootstrap · Context API |
+| **Calidad** | Vitest + React Testing Library · 17 Pruebas Unitarias · Cobertura ~62% |
+| **Entrega** | Evaluación Parcial 2 (EP2) · Repositorio GitHub + Documento de Testing |
 
-Currently, two official plugins are available:
+Este proyecto es una aplicación web SPA (Single Page Application) desarrollada para la asignatura **Desarrollo Fullstack II**. Consiste en la migración y evolución de un sitio web estático a una moderna aplicación en **React**, utilizando **Vite** y **TypeScript**, aplicando buenas prácticas de arquitectura, patrones de diseño y pruebas unitarias.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologías Utilizadas
 
-## React Compiler
+*   **Core:** [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
+*   **Enrutamiento:** [React Router DOM](https://reactrouter.com/)
+*   **Estilos:** [Bootstrap 5](https://getbootstrap.com/) + CSS Modular
+*   **Pruebas:** [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/), [jsdom](https://github.com/jsdom/jsdom)
+*   **Cobertura:** `@vitest/coverage-v8`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Características Principales
 
-## Expanding the ESLint configuration
+1.  **Catálogo Interactivo:** Listado de más de 50 productos musicales con filtros de búsqueda en tiempo real y filtrado por categoría.
+2.  **Vista de Detalle:** Página individual para cada producto mediante parámetros de ruta (`/producto/:id`).
+3.  **Autenticación de Usuarios:** Registro e inicio de sesión con validaciones de formato (correo, longitud de contraseña) y persistencia simulada en `localStorage`.
+4.  **Carrito de Compras (Lógica de Negocio):** Los usuarios pueden agregar productos al carrito, pero **solo si han iniciado sesión** previamente.
+5.  **Panel de Administración (CRUD):** Vista protegida para administradores que permite Crear, Leer, Actualizar y Eliminar productos del catálogo.
+6.  **Diseño Responsivo:** Interfaz adaptada para móviles, tablets y computadoras utilizando el sistema de grid de Bootstrap.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🏗️ Arquitectura y Patrones de Diseño
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+El proyecto fue construido siguiendo estándares profesionales de React:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Atomic Design
+La interfaz está dividida en componentes reutilizables:
+*   **Átomos (`/atoms`):** Elementos básicos e indivisibles (Ej: `Boton.tsx`, `Input.tsx`).
+*   **Moléculas (`/molecules`):** Combinación de átomos con una función específica (Ej: `CardProducto.tsx`, `CampoFormulario.tsx`).
+*   **Organismos (`/organism`):** Componentes complejos que forman secciones de la página (Ej: `Navbar.tsx`, `Footer.tsx`).
+*   **Páginas (`/pages`):** Vistas completas que agrupan organismos y se conectan al enrutador.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Patrón de Diseño: Provider Pattern (Context API)
+Para manejar el estado global y evitar el *prop drilling* (pasar propiedades por múltiples niveles), se implementó el **Provider Pattern**:
+*   `AuthContext`: Gestiona el estado de la sesión del usuario.
+*   `CartContext`: Gestiona los productos en el carrito y las reglas de negocio.
+*   `productoService`: Patrón Repositorio para centralizar la lógica del CRUD de los productos simulando una API.
 
+## 📦 Instalación y Ejecución Local
+
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/Fimchart/SonidoVivo_React
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Ejecuta el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+
+4. Abre tu navegador en `http://localhost:5173`.
+
+## 🧪 Pruebas Unitarias y Cobertura
+
+El proyecto cuenta con 17 pruebas unitarias distribuidas en 3 archivos, abarcando el servicio CRUD, renderizado de componentes y validaciones de formularios.
+
+Para ejecutar las pruebas en modo vigilancia (Watch):
+```bash
+npm run test
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+Para generar el reporte de cobertura (se creará una carpeta `/coverage` con un `index.html` interactivo):
+```bash
+npm run coverage
 ```
+
+**Resumen de Pruebas:**
+*   `producto.Service.test.ts`: 7 pruebas (CRUD completo, búsquedas y casos borde).
+*   `UI.test.tsx`: 5 pruebas (Renderizado de tarjetas, formato de precios, props y enlaces).
+*   `Auth.test.tsx`: 5 pruebas (Validación de campos vacíos, formato de correo, contraseñas seguras y coincidentes).
+
+---
+*Proyecto desarrollado para la Evaluación Parcial 2 (EP2) de la carrera de Ingeniería en Informática - Duoc UC.*
