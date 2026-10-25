@@ -8,6 +8,7 @@ import QuienesSomos from './pages/QuienesSomos';
 import Contacto from './pages/Contacto';
 import Admin from './pages/Admin';
 import Login from './pages/Login'; // <-- Asegúrate de importar Login
+import Registro from './pages/Registro'; // <-- Importar Registro
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/login' element={<Login />} /> {/* <-- Asegúrate de tener esta ruta */}
+          <Route path='/registro' element={<Registro />} /> {/* <-- Agregar ruta */}
         </Routes>
       </div>
 

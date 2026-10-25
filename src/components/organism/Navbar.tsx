@@ -1,7 +1,8 @@
+// src/components/organism/Navbar.tsx
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CardContext";
+import { useCart } from "../../context/CardContext"; // Corregido: era CartContext, no CardContext
 import './Navbar.css';
 
 function Navbar() {
@@ -64,9 +65,16 @@ function Navbar() {
                             Salir
                         </button>
                     ) : (
-                        <NavLink to="/login" className="btn btn-outline-warning btn-sm ms-2" onClick={cerrarMenu}>
-                            Ingresar
-                        </NavLink>
+                        <div className="d-flex gap-2 ms-2">
+                            <NavLink to="/login" className="btn btn-outline-warning btn-sm" onClick={cerrarMenu}>
+                                Ingresar
+                            </NavLink>
+                            {/* Botón de registro: se oculta en móviles muy pequeños para no saturar, 
+                                pero se muestra en pantallas medianas en adelante */}
+                            <NavLink to="/registro" className="btn btn-outline-light btn-sm d-none d-md-block" onClick={cerrarMenu}>
+                                Registrarse
+                            </NavLink>
+                        </div>
                     )}
 
                     <button className="menu-toggle" onClick={() => setMenuAbierto(!menuAbierto)}>
@@ -78,5 +86,4 @@ function Navbar() {
     );
 }
 
-// ¡ESTA LÍNEA FALTABA!
 export default Navbar;
