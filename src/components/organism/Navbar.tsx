@@ -9,7 +9,7 @@ function Navbar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
     const cerrarMenu = () => setMenuAbierto(false);
     
-    // AQUÍ AGREGAMOS 'rol' PARA SABER SI ES ADMIN O USER
+    // Obtenemos el rol y el usuario del contexto
     const { usuario, rol, logout } = useAuth(); 
     const { totalItems, vaciarCarrito } = useCart();
     const navigate = useNavigate();
@@ -17,6 +17,7 @@ function Navbar() {
     const handleLogout = () => {
         logout();
         localStorage.removeItem('sv_user');
+        localStorage.removeItem('sv_rol'); // Limpiamos el rol del localStorage
         vaciarCarrito();
         navigate('/');
         cerrarMenu();
@@ -66,10 +67,11 @@ function Navbar() {
 
                 {/* Acciones */}
                 <div className="header-actions">
-                    <button className="header-action" title="Carrito">
+                    {/* Ícono del Carrito enlazado a la nueva página */}
+                    <NavLink to="/carrito" className="header-action" title="Ver Carrito" onClick={cerrarMenu}>
                         🛒
                         <span className="cart-count">{totalItems}</span>
-                    </button>
+                    </NavLink>
 
                     {usuario ? (
                         <button onClick={handleLogout} className="btn btn-outline-danger btn-sm ms-2">

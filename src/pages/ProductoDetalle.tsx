@@ -1,4 +1,7 @@
+// src/pages/ProductoDetalle.tsx
+import { useState } from 'react'; // <-- Importamos useState
 import { useParams, useNavigate } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap'; // <-- Importamos el Modal
 import { productoService } from '../Service/ProductoService';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -10,7 +13,9 @@ function ProductoDetalle() {
   const { agregarAlCarrito } = useCart();
   const { usuario } = useAuth();
   
-  // Buscamos el producto (Faltaba esta línea)
+  // Estado para controlar el modal
+  const [showModal, setShowModal] = useState(false);
+
   const producto = productoService.getById(Number(id));
 
   if (!producto) {
@@ -30,12 +35,12 @@ function ProductoDetalle() {
 
   const handleComprar = () => {
     if (!usuario) {
-      alert("¡Debes iniciar sesión para comprar!");
-      navigate('/login');
+      // En lugar de alert(), mostramos el modal
+      setShowModal(true);
       return;
     }
     agregarAlCarrito(producto);
-    alert(`${producto.titulo} agregado al carrito.`);
+    alert(`${producto.titulo} agregado al carrito.`); // (También podrías cambiar esto por un Toast de Bootstrap)
   };
 
   return (
@@ -66,9 +71,36 @@ function ProductoDetalle() {
           </div>
         </div>
       </div>
+
+      {/* MODAL DE BOOTSTRAP ELEGANTE */}
+      <Modal 
+        show={showModal} 
+        onHide={() => setShowModal(false)} 
+        centered
+        contentClassName="bg-dark text-white border-secondary"
+      >
+        <Modal.Header closeButton closeVariant="white" className="border-secondary">
+          <Modal.Title>Inicia sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="mb-0">
+            Para poder comprar y agregar productos al carrito, necesitas tener una cuenta y estar conectado.
+          </p>
+        </Modal.Body>
+        <Modal.Footer className="border-secondary">
+          <Button variant="outline-secondary" onClick={() => setShowModal(false)}>
+            Cancelar
+          </Button>
+          <Button 
+            style={{ backgroundColor: 'var(--sv-primary)', border: 'none' }} 
+            onClick={() => navigate('/login')}
+          >
+            Ir a Iniciar Sesión
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
 
-// ¡ESTA LÍNEA FALTABA!
 export default ProductoDetalle;

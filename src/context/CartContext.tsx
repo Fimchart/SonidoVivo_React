@@ -5,10 +5,11 @@ import type { Producto } from '../data/Producto';
 
 interface CartContextType {
   carrito: Producto[];
-  agregarAlCarrito: (producto: Producto) => boolean; // Retorna true si se agregó, false si no hay sesión
+  agregarAlCarrito: (producto: Producto) => boolean;
   eliminarDelCarrito: (id: number) => void;
   vaciarCarrito: () => void;
   totalItems: number;
+  totalPrecio: number; // <-- NUEVO
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -17,21 +18,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [carrito, setCarrito] = useState<Producto[]>([]);
 
   const agregarAlCarrito = (producto: Producto) => {
-    // Lógica de negocio: Verificamos si hay usuario logueado
-    const usuarioGuardado = localStorage.getItem('sv_user'); // Lo guardaremos en localStorage en el Login
-    if (!usuarioGuardado) {
-      return false; // No está logueado, no se puede agregar
-    }
+    const usuarioGuardado = localStorage.getItem('sv_user');
+    if (!usuarioGuardado) return false; // No está logueado
     
     setCarrito((prev) => [...prev, producto]);
     return true;
   };
 
   const eliminarDelCarrito = (id: number) => {
-    setCarrito((prev) => prev.filter((p) => p.id !== id));
+    // Buscamos el índice del primer producto con ese ID y lo eliminamos
+    setCarrito((prev) => {
+      const index = prev.findIndex(p => p.id === id);
+      if (index === -1) return prev;
+      const nuevoCarrito = [...prev];
+      nuevoCarrito.splice(index, 1);
+      return nuevoCarrito;
+    });
   };
 
   const vaciarCarrito = () => setCarrito([]);
+
+  // Cálculo automático del total a pagar
+  const totalPrecio = carrito.reduce((total, producto) => total + producto.precio, 0);
 
   return (
     <CartContext.Provider value={{ 
@@ -39,7 +47,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       agregarAlCarrito, 
       eliminarDelCarrito, 
       vaciarCarrito,
-      totalItems: carrito.length 
+      totalItems: carrito.length,
+      totalPrecio
     }}>
       {children}
     </CartContext.Provider>

@@ -2,16 +2,18 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/organism/Navbar';
 import Footer from './components/organism/Footer';
-import RutaProtegida from './context/RutaProtegida'; // <-- Asegúrate de que esta carpeta exista
+import RutaProtegida from './context/RutaProtegida';
 
+// Importación de páginas
 import Inicio from './pages/Inicio';
 import Productos from './pages/Productos';
 import ProductoDetalle from './pages/ProductoDetalle';
 import QuienesSomos from './pages/QuienesSomos';
 import Contacto from './pages/Contacto';
-import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Registro from './pages/Registro';
+import Admin from './pages/Admin';
+import Carrito from './pages/Carrito'; // <-- Nueva página importada
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
 
       <div className="flex-grow-1">
         <Routes>
+          {/* Rutas Públicas */}
           <Route path='/' element={<Inicio />} />
           <Route path='/productos' element={<Productos />} />
           <Route path='/producto/:id' element={<ProductoDetalle />} />
@@ -28,7 +31,10 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/registro' element={<Registro />} />
           
-          {/* Ruta Protegida para el Admin */}
+          {/* Ruta del Carrito (Pública, pero la compra requiere login) */}
+          <Route path='/carrito' element={<Carrito />} />
+
+          {/* Ruta Protegida (Solo Admin) */}
           <Route 
             path='/admin' 
             element={
