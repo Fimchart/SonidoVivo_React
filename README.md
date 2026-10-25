@@ -53,6 +53,9 @@ Para manejar el estado global y evitar el *prop drilling* (pasar propiedades por
 2. Instala las dependencias:
    ```bash
    npm install
+   npm install react-boostrap
+   npm install react-router-dom
+   npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom @vitest/coverage-v8
    ```
 
 3. Ejecuta el servidor de desarrollo:
