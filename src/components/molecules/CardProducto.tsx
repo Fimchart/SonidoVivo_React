@@ -1,4 +1,4 @@
-import Boton from '../atomos/Boton';
+import Boton from '../atoms/Boton';
 
 interface CardProps {
     id: number;

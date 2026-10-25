@@ -1,4 +1,4 @@
-import Input from "../atomos/Input";
+import Input from "../atoms/Input";
 
 type Props = {
     etiqueta: string;

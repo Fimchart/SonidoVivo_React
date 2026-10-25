@@ -1,4 +1,4 @@
-import CardProducto from "../componentes/moleculas/CardProducto";
+import CardProducto from "../components/molecules/CardProducto";
 
 // BASE DE DATOS COMPLETA DE SONIDO VIVO (51 PRODUCTOS)
 const listaProductos = [

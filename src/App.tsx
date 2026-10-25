@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './componentes/organismos/Navbar';
-import Inicio from './paginas/Inicio';
-import Productos from './paginas/Productos';
-import QuienesSomos from './paginas/QuienesSomos';
-import Contacto from './paginas/Contacto';
+import Navbar from './components/organism/Navbar';
+import Inicio from './pages/Inicio';
+import Productos from './pages/Productos';
+import QuienesSomos from './pages/QuienesSomos';
+import Contacto from './pages/Contacto';
 
 
 function App() {
