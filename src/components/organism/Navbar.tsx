@@ -2,14 +2,15 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext"; // Corregido: era CartContext, no CardContext
+import { useCart } from "../../context/CartContext"; 
 import './Navbar.css';
 
 function Navbar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
     const cerrarMenu = () => setMenuAbierto(false);
     
-    const { usuario, logout } = useAuth();
+    // AQUÍ AGREGAMOS 'rol' PARA SABER SI ES ADMIN O USER
+    const { usuario, rol, logout } = useAuth(); 
     const { totalItems, vaciarCarrito } = useCart();
     const navigate = useNavigate();
 
@@ -47,9 +48,19 @@ function Navbar() {
                         <li>
                             <NavLink to="/contacto" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Contacto</NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/admin" className={({ isActive }) => isActive ? "nav-link active text-warning" : "nav-link text-warning"} onClick={cerrarMenu}>Admin</NavLink>
-                        </li>
+                        
+                        {/* ENLACE CONDICIONAL: Solo visible si el rol es admin */}
+                        {rol === 'admin' && (
+                            <li>
+                                <NavLink 
+                                    to="/admin" 
+                                    className={({ isActive }) => isActive ? "nav-link active text-warning" : "nav-link text-warning"} 
+                                    onClick={cerrarMenu}
+                                >
+                                    Admin
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 
@@ -69,8 +80,6 @@ function Navbar() {
                             <NavLink to="/login" className="btn btn-outline-warning btn-sm" onClick={cerrarMenu}>
                                 Ingresar
                             </NavLink>
-                            {/* Botón de registro: se oculta en móviles muy pequeños para no saturar, 
-                                pero se muestra en pantallas medianas en adelante */}
                             <NavLink to="/registro" className="btn btn-outline-light btn-sm d-none d-md-block" onClick={cerrarMenu}>
                                 Registrarse
                             </NavLink>

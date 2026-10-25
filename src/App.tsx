@@ -1,14 +1,17 @@
+// src/App.tsx
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/organism/Navbar';
 import Footer from './components/organism/Footer';
+import RutaProtegida from './context/RutaProtegida'; // <-- Asegúrate de que esta carpeta exista
+
 import Inicio from './pages/Inicio';
 import Productos from './pages/Productos';
 import ProductoDetalle from './pages/ProductoDetalle';
 import QuienesSomos from './pages/QuienesSomos';
 import Contacto from './pages/Contacto';
 import Admin from './pages/Admin';
-import Login from './pages/Login'; // <-- Asegúrate de importar Login
-import Registro from './pages/Registro'; // <-- Importar Registro
+import Login from './pages/Login';
+import Registro from './pages/Registro';
 
 function App() {
   return (
@@ -22,9 +25,18 @@ function App() {
           <Route path='/producto/:id' element={<ProductoDetalle />} />
           <Route path='/quienessomos' element={<QuienesSomos />} />
           <Route path='/contacto' element={<Contacto />} />
-          <Route path='/admin' element={<Admin />} />
-          <Route path='/login' element={<Login />} /> {/* <-- Asegúrate de tener esta ruta */}
-          <Route path='/registro' element={<Registro />} /> {/* <-- Agregar ruta */}
+          <Route path='/login' element={<Login />} />
+          <Route path='/registro' element={<Registro />} />
+          
+          {/* Ruta Protegida para el Admin */}
+          <Route 
+            path='/admin' 
+            element={
+              <RutaProtegida rolRequerido="admin">
+                <Admin />
+              </RutaProtegida>
+            } 
+          />
         </Routes>
       </div>
 
