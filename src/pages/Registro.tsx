@@ -18,6 +18,7 @@ function Registro() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Limpiamos el error del campo cuando el usuario empieza a escribir
     if (errores[e.target.name]) {
       setErrores({ ...errores, [e.target.name]: '' });
     }
@@ -56,6 +57,7 @@ function Registro() {
     const exito = registrar(formData.nombre, formData.correo, formData.password);
     
     if (exito) {
+      // Auto-loguear después de registrar
       login(formData.correo, formData.password);
       navigate('/productos');
     } else {
@@ -69,6 +71,7 @@ function Registro() {
         <h2 className="auth-title">Crea tu cuenta</h2>
         
         <form onSubmit={handleSubmit} noValidate>
+          {/* Nombre */}
           <div className="mb-3">
             <label className="auth-label">Nombre Completo</label>
             <div className="input-group">
@@ -87,6 +90,7 @@ function Registro() {
             {errores.nombre && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>{errores.nombre}</div>}
           </div>
 
+          {/* Correo */}
           <div className="mb-3">
             <label className="auth-label">Correo Electrónico</label>
             <div className="input-group">
@@ -105,6 +109,7 @@ function Registro() {
             {errores.correo && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>{errores.correo}</div>}
           </div>
           
+          {/* Contraseña */}
           <div className="mb-3">
             <label className="auth-label">Contraseña</label>
             <div className="input-group">
@@ -117,12 +122,13 @@ function Registro() {
                 type="password" name="password" 
                 className={`form-control auth-input ${errores.password ? 'is-invalid' : ''}`} 
                 value={formData.password} onChange={handleChange} 
-                placeholder="••••••••"
+                placeholder="Crea una contraseña" // <-- PLACEHOLDER ÚNICO
               />
             </div>
             {errores.password && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>{errores.password}</div>}
           </div>
 
+          {/* Confirmar Contraseña */}
           <div className="mb-4">
             <label className="auth-label">Confirmar Contraseña</label>
             <div className="input-group">
@@ -135,7 +141,7 @@ function Registro() {
                 type="password" name="confirmPassword" 
                 className={`form-control auth-input ${errores.confirmPassword ? 'is-invalid' : ''}`} 
                 value={formData.confirmPassword} onChange={handleChange} 
-                placeholder="••••••••"
+                placeholder="Repite la contraseña" // <-- PLACEHOLDER ÚNICO
               />
             </div>
             {errores.confirmPassword && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>{errores.confirmPassword}</div>}

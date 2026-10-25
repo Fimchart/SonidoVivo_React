@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CardContext"; // Corregido: era CartContext, no CardContext
+import { useCart } from "../../context/CartContext"; // Corregido: era CartContext, no CardContext
 import './Navbar.css';
 
 function Navbar() {

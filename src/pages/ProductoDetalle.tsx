@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { productoService } from '../Service/ProductoService';
-import { useCart } from '../context/CardContext';
+import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import Boton from '../components/atoms/Boton';
 
