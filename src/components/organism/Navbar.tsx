@@ -1,33 +1,96 @@
-import { Link } from "react-router-dom";
+// src/components/organism/Navbar.tsx
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-function Navbar (){
+function Navbar() {
+    // Estado para controlar el menú en móviles
+    const [menuAbierto, setMenuAbierto] = useState(false);
+
+    // Función para cerrar el menú al hacer clic en un enlace
+    const cerrarMenu = () => setMenuAbierto(false);
+
     return (
-        <nav className="navbar navbar-expand bg-dark">
-            <div className="container">
-                <span className="navbar-brand text-white">
-                    Mi tienda
-                </span>
+        <header className="site-header">
+            <div className="header-container">
+                {/* Logo */}
+                <NavLink to="/" className="logo" onClick={cerrarMenu}>
+                    <div className="logo-icon">
+                        <i className="bi bi-music-note-beamed"></i> 🎸
+                    </div>
+                    <span className="logo-text">
+                        Sonido<span>Vivo</span>
+                    </span>
+                </NavLink>
 
-                <div className="navbar-nav">
-                    <Link className="nav-link text-white" to="/">
-                        Inicio
-                    </Link>
+                {/* Navegación (Se oculta en móviles si no está abierto) */}
+                <nav className={`main-nav ${menuAbierto ? 'active' : ''}`}>
+                    <ul className="nav-list">
+                        <li>
+                            <NavLink 
+                                to="/" 
+                                className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                                onClick={cerrarMenu}
+                            >
+                                Inicio
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/productos" 
+                                className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                                onClick={cerrarMenu}
+                            >
+                                Productos
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/quienessomos" 
+                                className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                                onClick={cerrarMenu}
+                            >
+                                Quiénes Somos
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/contacto" 
+                                className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                                onClick={cerrarMenu}
+                            >
+                                Contacto
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/admin" 
+                                className={({ isActive }) => isActive ? "nav-link active text-warning" : "nav-link text-warning"}
+                                onClick={cerrarMenu}
+                            >
+                                Admin
+                            </NavLink>
+                        </li>
+                    </ul>
+                </nav>
 
-                    <Link className="nav-link text-white" to="/productos">
-                        Productos
-                    </Link>
-
-                    <Link className="nav-link text-white" to="/quienessomos">
-                        Quienes somos
-                    </Link>
-
-                    <Link className="nav-link text-white" to="/contacto">
-                        Contacto
-                    </Link>
+                {/* Acciones (Carrito y Menú Móvil) */}
+                <div className="header-actions">
+                    <button className="header-action" title="Carrito">
+                        🛒
+                        <span className="cart-count">0</span>
+                    </button>
+                    
+                    {/* Botón hamburguesa solo visible en móvil */}
+                    <button 
+                        className="menu-toggle" 
+                        onClick={() => setMenuAbierto(!menuAbierto)}
+                    >
+                        {menuAbierto ? '✖' : '☰'}
+                    </button>
                 </div>
             </div>
-        </nav>
-    )
+        </header>
+    );
 }
 
 export default Navbar;

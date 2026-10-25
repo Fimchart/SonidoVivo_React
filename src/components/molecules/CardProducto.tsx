@@ -6,9 +6,10 @@ interface CardProps {
     descripcion: string;
     precio: number;
     imagen: string;
+    categoria: string; // <-- Asegúrate de incluir la categoría en las props
 }
 
-function CardProducto ({id, titulo, descripcion, precio, imagen}: CardProps){
+function CardProducto ({id, titulo, descripcion, precio, imagen, categoria}: CardProps){
 
     return (
         <div className="card" style={{width: '20rem'}}>
@@ -29,6 +30,9 @@ function CardProducto ({id, titulo, descripcion, precio, imagen}: CardProps){
 
                     <p className="card-text">
                         ${precio}
+                    </p>
+                    <p className="card-text">
+                        {categoria}
                     </p>
 
                     <div className="mt-auto">{/*Empuja el botón hacia abajo para mantener todos los botones alineados*/}
