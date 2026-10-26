@@ -10,8 +10,12 @@ describe('Pruebas del Servicio de Productos (CRUD y Filtros)', () => {
 
   it('2. Debe crear un nuevo producto (CREATE)', () => {
     const nuevo = {
-      codigo: 'TEST01', titulo: 'Producto Prueba', descripcion: 'Test', 
-      precio: 1000, categoria: 'Accesorios', imagen: 'test.jpg'
+      codigo: 'TEST01',
+      titulo: 'Producto Prueba',
+      descripcion: 'Test',
+      precio: 1000,
+      categoria: 'Accesorios',
+      imagen: 'test.jpg'
     };
     const creado = productoService.create(nuevo);
     expect(creado.id).toBeDefined();
@@ -27,8 +31,12 @@ describe('Pruebas del Servicio de Productos (CRUD y Filtros)', () => {
 
   it('4. Debe eliminar un producto (DELETE)', () => {
     const creado = productoService.create({
-      codigo: 'TEST02', titulo: 'Para Borrar', descripcion: 'Test', 
-      precio: 1000, categoria: 'Accesorios', imagen: 'test.jpg'
+      codigo: 'TEST02',
+      titulo: 'Para Borrar',
+      descripcion: 'Test',
+      precio: 1000,
+      categoria: 'Accesorios',
+      imagen: 'test.jpg'
     });
     const exito = productoService.delete(creado.id);
     expect(exito).toBe(true);

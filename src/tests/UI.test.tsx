@@ -31,8 +31,9 @@ describe('Pruebas de Renderizado de Componentes', () => {
         <Inicio />
       </MemoryRouter>
     );
-    expect(screen.getByText(/Siente la música/i)).toBeInTheDocument();
-    expect(screen.getByText(/BIENVENIDO A SONIDO VIVO/i)).toBeInTheDocument();
+    // Verifica que exista el encabezado principal del Hero
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Siente la música/i);
+    expect(screen.getByText(/vive el sonido/i)).toBeInTheDocument();
   });
 
   it('11. Inicio debe mostrar los 4 beneficios', () => {
@@ -51,7 +52,8 @@ describe('Pruebas de Renderizado de Componentes', () => {
         <Inicio />
       </MemoryRouter>
     );
-    const linkCatalogo = screen.getByText('Ver Catálogo');
+    // Usa expresión regular para ignorar el emoji 🎸
+    const linkCatalogo = screen.getByRole('link', { name: /ver catálogo/i });
     expect(linkCatalogo).toHaveAttribute('href', '/productos');
   });
 });
