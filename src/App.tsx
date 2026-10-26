@@ -1,7 +1,7 @@
 // src/App.tsx
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/organism/Navbar';
-import Footer from './components/organism/Footer';
+import Navbar from './assets/components/organism/Navbar';
+import Footer from './assets/components/organism/Footer';
 import RutaProtegida from './context/RutaProtegida';
 
 // Importación de páginas
@@ -13,7 +13,8 @@ import Contacto from './pages/Contacto';
 import Login from './pages/Login';
 import Registro from './pages/Registro';
 import Admin from './pages/Admin';
-import Carrito from './pages/Carrito'; // <-- Nueva página importada
+import Carrito from './pages/Carrito';
+import PreguntasFrecuentes from './pages/PreguntasFrecuentes'; // Tu archivo exacto
 
 function App() {
   return (
@@ -28,10 +29,10 @@ function App() {
           <Route path='/producto/:id' element={<ProductoDetalle />} />
           <Route path='/quienessomos' element={<QuienesSomos />} />
           <Route path='/contacto' element={<Contacto />} />
+          <Route path='/preguntas-frecuentes' element={<PreguntasFrecuentes />} />
           <Route path='/login' element={<Login />} />
           <Route path='/registro' element={<Registro />} />
-          
-          {/* Ruta del Carrito (Pública, pero la compra requiere login) */}
+          {/* Ruta del Carrito */}
           <Route path='/carrito' element={<Carrito />} />
 
           {/* Ruta Protegida (Solo Admin) */}
@@ -48,7 +49,7 @@ function App() {
 
       <Footer />
     </div>
-  )
+  );
 }
 
 export default App;

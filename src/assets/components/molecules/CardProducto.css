@@ -1,0 +1,118 @@
+/* src/components/molecules/CardProducto.css */
+.products-grid { 
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 18px; 
+}
+
+.product-card {
+  overflow: hidden; 
+  border: 1px solid rgba(255, 193, 7, 0.25); /* Borde dorado suave para resaltar del fondo */
+  border-radius: var(--sv-radius);
+  background: var(--sv-card); 
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card:hover { 
+  transform: translateY(-5px); 
+  border-color: #ffc107; /* Borde dorado en hover */
+  box-shadow: 0 8px 20px rgba(255, 193, 7, 0.15); /* Resplandor cálido */
+}
+
+.product-image { 
+  position: relative; 
+  aspect-ratio: 1 / 1; 
+  overflow: hidden; 
+  background: #ffffff; /* Fondo blanco limpio para resaltar el instrumento */
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid rgba(255, 193, 7, 0.3);
+}
+
+.product-image img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; /* Ajusta la imagen completa sin recortar el instrumento */
+  transition: transform 0.4s ease; 
+}
+
+.product-card:hover .product-image img { 
+  transform: scale(1.06); 
+}
+
+.product-badge {
+  position: absolute; 
+  z-index: 2; 
+  top: 12px; 
+  left: 12px; 
+  padding: 6px 10px;
+  border-radius: 6px; 
+  background: var(--sv-primary); 
+  color: white; 
+  font-size: 10px; 
+  font-weight: 800; 
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.product-info { 
+  padding: 20px; 
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.product-category { 
+  color: var(--sv-primary); 
+  font-size: 10px; 
+  font-weight: 800; 
+  text-transform: uppercase; 
+  letter-spacing: 0.8px; 
+}
+
+.product-info h3 { 
+  margin: 8px 0; 
+  font-family: "Montserrat", sans-serif; 
+  font-size: 18px; 
+  color: #ffffff;
+}
+
+.product-description { 
+  min-height: 40px; 
+  margin: 0; 
+  color: var(--sv-muted); 
+  font-size: 12px; 
+  line-height: 1.6; 
+}
+
+.product-footer { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 10px; 
+  margin-top: 15px; 
+  padding-top: 15px; 
+  border-top: 1px solid var(--sv-border); 
+}
+
+/* El precio ahora destaca en dorado vibrante */
+.product-price { 
+  font-size: 18px; 
+  font-weight: 800; 
+  color: #ffc107; 
+}
+
+/* Responsive Grilla */
+@media (max-width: 1024px) { 
+  .products-grid { grid-template-columns: repeat(2, 1fr); } 
+}
+
+@media (max-width: 767px) { 
+  .products-grid { grid-template-columns: 1fr; } 
+}

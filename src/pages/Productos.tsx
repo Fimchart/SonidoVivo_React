@@ -1,13 +1,27 @@
-import { useState } from 'react';
-import CardProducto from "../components/molecules/CardProducto";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import CardProducto from "../assets/components/molecules/CardProducto";
 import { productoService } from '../Service/ProductoService';
-import './Inicio.css'; // O crea un Productos.css, pero reutilizamos el contenedor
+import './Inicio.css';
 
 function Productos() {
+  const [searchParams] = useSearchParams();
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('Todas');
 
-  const productosFiltrados = productoService.search(busqueda, categoria);
+  // Lee el parámetro ?categoria= de la URL y actualiza el estado
+  useEffect(() => {
+    const catQuery = searchParams.get('categoria');
+    if (catQuery) {
+      setCategoria(catQuery);
+    } else {
+      setCategoria('Todas');
+    }
+  }, [searchParams]);
+
+  // Si selecciona "Guitarras", busca tanto Guitarras Acústicas como Eléctricas
+  const productosFiltrados = productoService.search(busqueda, categoria === 'Guitarras' ? '' : categoria)
+    .filter(p => categoria === 'Guitarras' ? p.categoria.includes('Guitarras') : true);
 
   return (
     <div className="section-container" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
@@ -32,6 +46,7 @@ function Productos() {
           style={{ padding: '12px', borderRadius: '8px', maxWidth: '300px' }}
         >
           <option value="Todas">Todas las categorías</option>
+          <option value="Guitarras">Todas las Guitarras</option>
           <option value="Guitarras Acústicas">Guitarras Acústicas</option>
           <option value="Guitarras Eléctricas">Guitarras Eléctricas</option>
           <option value="Bajos">Bajos</option>

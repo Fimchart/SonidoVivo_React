@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import CardProducto from '../components/molecules/CardProducto';
+import CardProducto from '../assets/components/molecules/CardProducto';
 import Inicio from '../pages/Inicio';
 
 describe('Pruebas de Renderizado de Componentes', () => {

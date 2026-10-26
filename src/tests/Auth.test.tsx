@@ -59,8 +59,8 @@ describe('Pruebas de Formularios (Validaciones y Eventos)', () => {
     
     fireEvent.change(screen.getByPlaceholderText('Tu nombre'), { target: { value: 'Test' } });
     fireEvent.change(screen.getByPlaceholderText('ejemplo@correo.cl'), { target: { value: 'test@test.cl' } });
-    fireEvent.change(screen.getByPlaceholderText('Crea una contraseña'), { target: { value: '123456' } }); // <-- Corregido
-    fireEvent.change(screen.getByPlaceholderText('Repite la contraseña'), { target: { value: '654321' } }); // <-- Corregido
+    fireEvent.change(screen.getByPlaceholderText('Crea una contraseña'), { target: { value: '123456' } }); // 
+    fireEvent.change(screen.getByPlaceholderText('Repite la contraseña'), { target: { value: '654321' } }); // 
     
     fireEvent.click(screen.getByRole('button', { name: /Registrarme/i }));
 
@@ -69,13 +69,15 @@ describe('Pruebas de Formularios (Validaciones y Eventos)', () => {
     });
   });
 
+
+
   it('17. Registro debe validar el largo de la contraseña', async () => {
     renderWithProviders(<Registro />);
     
     fireEvent.change(screen.getByPlaceholderText('Tu nombre'), { target: { value: 'Test' } });
     fireEvent.change(screen.getByPlaceholderText('ejemplo@correo.cl'), { target: { value: 'test@test.cl' } });
-    fireEvent.change(screen.getByPlaceholderText('Crea una contraseña'), { target: { value: '123' } }); // <-- Corregido
-    fireEvent.change(screen.getByPlaceholderText('Repite la contraseña'), { target: { value: '123' } }); // <-- Corregido
+    fireEvent.change(screen.getByPlaceholderText('Crea una contraseña'), { target: { value: '123' } }); // 
+    fireEvent.change(screen.getByPlaceholderText('Repite la contraseña'), { target: { value: '123' } }); // 
     
     fireEvent.click(screen.getByRole('button', { name: /Registrarme/i }));
 

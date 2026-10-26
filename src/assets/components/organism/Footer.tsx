@@ -1,6 +1,6 @@
-// src/components/organism/Footer.tsx
+// src/assets/components/organism/Footer.tsx
 import { Link } from 'react-router-dom';
-import './Footer.css'; // <-- Importamos sus estilos
+import './Footer.css';
 
 function Footer() {
     return (
@@ -32,10 +32,10 @@ function Footer() {
                         <h2>Tienda</h2>
                         <ul>
                             <li><Link to="/productos">Todos los productos</Link></li>
-                            <li><Link to="/productos">Guitarras</Link></li>
-                            <li><Link to="/productos">Baterías</Link></li>
-                            <li><Link to="/productos">Teclados</Link></li>
-                            <li><Link to="/productos">Estudio</Link></li>
+                            <li><Link to="/productos?categoria=Guitarras">Guitarras</Link></li>
+                            <li><Link to="/productos?categoria=Baterías">Baterías</Link></li>
+                            <li><Link to="/productos?categoria=Teclados">Teclados</Link></li>
+                            <li><Link to="/productos?categoria=Estudio">Estudio</Link></li>
                         </ul>
                     </div>
 
@@ -43,10 +43,10 @@ function Footer() {
                     <div className="footer-column">
                         <h2>Ayuda</h2>
                         <ul>
-                            <li><a href="#">Preguntas frecuentes</a></li>
-                            <li><a href="#">Envíos y devoluciones</a></li>
-                            <li><a href="#">Garantías</a></li>
-                            <li><a href="#">Términos y condiciones</a></li>
+                            <li><Link to="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
+                            <li><Link to="/preguntas-frecuentes?cat=envios">Envíos</Link></li>
+                            <li><Link to="/preguntas-frecuentes?cat=devoluciones">Devoluciones</Link></li>
+                            <li><Link to="/preguntas-frecuentes?cat=garantia">Garantías</Link></li>
                         </ul>
                     </div>
 

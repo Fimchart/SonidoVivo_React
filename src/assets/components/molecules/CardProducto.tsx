@@ -1,5 +1,5 @@
 import Boton from '../atoms/Boton';
-import './CardProducto.css'; // <-- IMPORTANTE: Importar los estilos
+import './CardProducto.css';
 
 interface CardProps {
     id: number;
@@ -27,7 +27,7 @@ function CardProducto({ id, titulo, descripcion, precio, imagen, categoria }: Ca
                 
                 <div className="product-footer">
                     <span className="product-price">{precioFormateado}</span>
-                    <Boton to={`/producto/${id}`} variant="primary">
+                    <Boton to={`/producto/${id}`} variant="warning">
                         Ver más
                     </Boton>
                 </div>

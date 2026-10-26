@@ -1,8 +1,8 @@
 // src/components/organism/Navbar.tsx
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext"; 
+import { useAuth } from "../../../context/AuthContext";
+import { useCart } from "../../../context/CartContext"; 
 import './Navbar.css';
 
 function Navbar() {
@@ -47,6 +47,9 @@ function Navbar() {
                             <NavLink to="/quienessomos" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Quiénes Somos</NavLink>
                         </li>
                         <li>
+                            <NavLink to="/preguntas-frecuentes" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Preguntas Frecuentes</NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/contacto" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={cerrarMenu}>Contacto</NavLink>
                         </li>
                         
@@ -67,7 +70,7 @@ function Navbar() {
 
                 {/* Acciones */}
                 <div className="header-actions">
-                    {/* Ícono del Carrito enlazado a la nueva página */}
+                    {/* Ícono del Carrito */}
                     <NavLink to="/carrito" className="header-action" title="Ver Carrito" onClick={cerrarMenu}>
                         🛒
                         <span className="cart-count">{totalItems}</span>
