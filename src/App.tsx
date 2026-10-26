@@ -1,5 +1,5 @@
 // src/App.tsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './assets/components/organism/Navbar';
 import Footer from './assets/components/organism/Footer';
 import Inicio from './pages/Inicio';
@@ -16,40 +16,38 @@ import RutaProtegida from './context/RutaProtegida';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: '#181b20' }}>
-        <Navbar />
-        
-        <div className="flex-grow-1">
-          <Routes>
-            {/* Rutas Públicas */}
-            <Route path="/" element={<Inicio />} />
-            <Route path="/productos" element={<Productos />} />
-            <Route path="/producto/:id" element={<ProductoDetalle />} />
-            <Route path="/quienessomos" element={<QuienesSomos />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
-            
-            {/* Ruta del Carrito */}
-            <Route path="/carrito" element={<Carrito />} />
-            
-            {/* Ruta Protegida (Solo Admin) */}
-            <Route 
-              path="/admin" 
-              element={
-                <RutaProtegida>
-                  <Admin />
-                </RutaProtegida>
-              } 
-            />
-          </Routes>
-        </div>
-
-        <Footer />
+    <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: '#181b20' }}>
+      <Navbar />
+      
+      <div className="flex-grow-1">
+        <Routes>
+          {/* Rutas Públicas */}
+          <Route path="/" element={<Inicio />} />
+          <Route path="/productos" element={<Productos />} />
+          <Route path="/producto/:id" element={<ProductoDetalle />} />
+          <Route path="/quienessomos" element={<QuienesSomos />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+          
+          {/* Ruta del Carrito */}
+          <Route path="/carrito" element={<Carrito />} />
+          
+          {/* Ruta Protegida (Solo Admin) */}
+          <Route 
+            path="/admin" 
+            element={
+              <RutaProtegida>
+                <Admin />
+              </RutaProtegida>
+            } 
+          />
+        </Routes>
       </div>
-    </BrowserRouter>
+
+      <Footer />
+    </div>
   );
 }
 
