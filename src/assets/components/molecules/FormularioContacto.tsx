@@ -12,7 +12,7 @@ function CampoFormulario({etiqueta, tipo, nombre, valor, alCambiar}: Props) {
     return (
         <div className="mb-3">
             <label className="form-label">
-                {etiqueta}
+                {etiqueta}S
             </label>
 
             <Input
