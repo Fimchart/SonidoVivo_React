@@ -14,6 +14,7 @@ import Carrito from './pages/Carrito';
 import Admin from './pages/Admin';
 import RutaProtegida from './context/RutaProtegida';
 
+
 function App() {
   return (
     <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: '#181b20' }}>
