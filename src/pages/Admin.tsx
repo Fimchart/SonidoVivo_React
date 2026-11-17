@@ -32,6 +32,7 @@ function Admin() {
   const [mensajes, setMensajes] = useState<MensajeContacto[]>([]);
   const [cargandoMensajes, setCargandoMensajes] = useState(false);
   const [errorMensajes, setErrorMensajes] = useState('');
+  const [mensajeSeleccionado, setMensajeSeleccionado] = useState<MensajeContacto | null>(null);
 
   const cargarProductos = () => {
     setProductos(productoService.getAll());
@@ -60,6 +61,52 @@ function Admin() {
     cargarProductos();
     cargarMensajes();
   }, []);
+
+  const abrirMensaje = async (msg: MensajeContacto) => {
+    setMensajeSeleccionado(msg);
+
+    if ((msg.estado || 'PENDIENTE') === 'PENDIENTE') {
+      try {
+        const respuesta = await fetch(`http://localhost:8082/api/mensajes/${msg.id}/visto`, {
+          method: 'PUT',
+        });
+
+        if (respuesta.ok) {
+          const actualizado: MensajeContacto = await respuesta.json();
+          const nuevoEstado = actualizado.estado || 'VISTO';
+
+          setMensajes((prev) =>
+            prev.map((m) => (m.id === msg.id ? { ...m, estado: nuevoEstado } : m))
+          );
+          setMensajeSeleccionado((prev) =>
+            prev && prev.id === msg.id ? { ...prev, estado: nuevoEstado } : prev
+          );
+        }
+      } catch (error) {
+        console.error('Error al marcar mensaje como visto:', error);
+      }
+    }
+  };
+
+  const eliminarMensaje = async (id: number) => {
+    if (!window.confirm('¿Estás seguro de eliminar este mensaje?')) return;
+
+    try {
+      const respuesta = await fetch(`http://localhost:8082/api/mensajes/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (respuesta.ok) {
+        setMensajes((prev) => prev.filter((m) => m.id !== id));
+        if (mensajeSeleccionado?.id === id) {
+          setMensajeSeleccionado(null);
+        }
+      }
+    } catch (error) {
+      console.error('Error al eliminar mensaje:', error);
+      alert('No se pudo eliminar el mensaje.');
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -267,32 +314,99 @@ function Admin() {
             <p className="text-secondary mb-0">Aún no hay mensajes registrados.</p>
           ) : (
             <div className="row g-3">
-              {mensajes.map((msg) => (
-                <div className="col-md-6" key={msg.id}>
-                  <div className="p-3 rounded border border-secondary h-100 d-flex flex-column justify-content-between" style={{ backgroundColor: '#16161a' }}>
-                    <div>
-                      <div className="d-flex justify-content-between align-items-start mb-2">
-                        <div>
-                          <h5 className="text-white mb-0">{msg.nombreCompleto}</h5>
-                          <small className="text-info">{msg.correo}</small>
+              {mensajes.map((msg) => {
+                const esVisto = msg.estado === 'VISTO';
+                return (
+                  <div className="col-md-6" key={msg.id}>
+                    <div
+                      onClick={() => abrirMensaje(msg)}
+                      className="p-3 rounded border border-secondary h-100 d-flex flex-column justify-content-between"
+                      style={{ backgroundColor: '#16161a', cursor: 'pointer' }}
+                    >
+                      <div>
+                        <div className="d-flex justify-content-between align-items-start mb-2">
+                          <div>
+                            <h5 className="text-white mb-0">{msg.nombreCompleto}</h5>
+                            <small className="text-info">{msg.correo}</small>
+                          </div>
+                          <span className={`badge ${esVisto ? 'bg-success' : 'bg-warning text-dark'}`}>
+                            {msg.estado || 'PENDIENTE'}
+                          </span>
                         </div>
-                        <span className="badge bg-warning text-dark">
-                          {msg.estado || 'PENDIENTE'}
-                        </span>
+                        <p className="text-light mt-2 mb-3 text-truncate">{msg.mensaje}</p>
                       </div>
-                      <p className="text-light mt-2 mb-3">{msg.mensaje}</p>
-                    </div>
 
-                    {msg.fechaCreacion && (
-                      <small className="text-secondary border-top border-secondary pt-2">
-                        Recibido: {String(msg.fechaCreacion)}
-                      </small>
-                    )}
+                      <div className="d-flex justify-content-between align-items-center border-top border-secondary pt-2">
+                        <small className="text-secondary">
+                          {msg.fechaCreacion ? `Recibido: ${String(msg.fechaCreacion)}` : ''}
+                        </small>
+                        <small className="text-primary">Clic para leer</small>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Modal para leer el mensaje completo */}
+      {mensajeSeleccionado && (
+        <div
+          className="modal show d-block"
+          tabIndex={-1}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
+          onClick={() => setMensajeSeleccionado(null)}
+        >
+          <div className="modal-dialog modal-dialog-centered" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content bg-dark text-white border border-secondary">
+              <div className="modal-header border-secondary">
+                <div>
+                  <h5 className="modal-title mb-0">{mensajeSeleccionado.nombreCompleto}</h5>
+                  <a href={`mailto:${mensajeSeleccionado.correo}`} className="text-info small text-decoration-none">
+                    {mensajeSeleccionado.correo}
+                  </a>
+                </div>
+                <span className={`badge ms-auto me-3 ${mensajeSeleccionado.estado === 'VISTO' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                  {mensajeSeleccionado.estado || 'PENDIENTE'}
+                </span>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  onClick={() => setMensajeSeleccionado(null)}
+                />
+              </div>
+
+              <div className="modal-body">
+                <p className="mb-0" style={{ whiteSpace: 'pre-wrap' }}>
+                  {mensajeSeleccionado.mensaje}
+                </p>
+              </div>
+
+              <div className="modal-footer border-secondary justify-content-between">
+                <small className="text-secondary">
+                  {mensajeSeleccionado.fechaCreacion ? `Recibido: ${String(mensajeSeleccionado.fechaCreacion)}` : ''}
+                </small>
+                <div className="d-flex gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-outline-danger"
+                    onClick={() => eliminarMensaje(mensajeSeleccionado.id)}
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => setMensajeSeleccionado(null)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
