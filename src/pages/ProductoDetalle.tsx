@@ -1,8 +1,9 @@
 // src/pages/ProductoDetalle.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { productoService } from '../Service/ProductoService';
+import type { Producto } from '../data/Producto';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -11,11 +12,40 @@ function ProductoDetalle() {
   const navigate = useNavigate();
   const { agregarAlCarrito } = useCart();
   const { usuario } = useAuth();
-  
-  // Estado para controlar el modal de inicio de sesión
+
+  const [producto, setProducto] = useState<Producto | undefined>(undefined);
+  const [cargando, setCargando] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const producto = productoService.getById(Number(id));
+  useEffect(() => {
+    const cargarDetalle = async () => {
+      setCargando(true);
+      try {
+        const encontrado = await productoService.getById(Number(id));
+        setProducto(encontrado);
+      } catch (error) {
+        console.error('Error al cargar detalle del producto:', error);
+        setProducto(undefined);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    if (id) {
+      cargarDetalle();
+    } else {
+      setCargando(false);
+    }
+  }, [id]);
+
+  if (cargando) {
+    return (
+      <div className="container py-5 text-center text-warning">
+        <div className="spinner-border" role="status" />
+        <p className="mt-2 mb-0">Cargando detalle del producto...</p>
+      </div>
+    );
+  }
 
   if (!producto) {
     return (
@@ -50,17 +80,17 @@ function ProductoDetalle() {
       {/* Tarjeta Detallada Centrada con Borde Dorado */}
       <div className="row justify-content-center">
         <div className="col-12 col-lg-10">
-          <div 
+          <div
             className="card text-white border-2 border-warning shadow-lg p-4 rounded-4"
             style={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}
           >
             <div className="row g-4">
-              
+
               {/* Imagen del Producto */}
               <div className="col-md-5 text-center d-flex align-items-center justify-content-center">
-                <img 
-                  src={producto.imagen} 
-                  alt={producto.titulo} 
+                <img
+                  src={producto.imagen}
+                  alt={producto.titulo}
                   className="img-fluid rounded-4 bg-white p-3 shadow border border-secondary w-100"
                   style={{ maxHeight: '380px', objectFit: 'contain' }}
                 />
@@ -80,7 +110,7 @@ function ProductoDetalle() {
 
                   <h1 className="text-warning fw-bold mb-1">{producto.titulo}</h1>
                   <p className="text-secondary small mb-3">Código: {producto.codigo}</p>
-                  
+
                   <h5 className="text-white fw-bold border-bottom border-secondary pb-2 mb-3">
                     Descripción del Producto
                   </h5>
@@ -111,8 +141,8 @@ function ProductoDetalle() {
                       ${Number(producto.precio).toLocaleString('es-CL')}
                     </h2>
                   </div>
-                  
-                  <button 
+
+                  <button
                     onClick={handleComprar}
                     className="btn btn-warning btn-lg fw-bold px-4 shadow flex-grow-1 flex-md-grow-0"
                   >
@@ -128,9 +158,9 @@ function ProductoDetalle() {
       </div>
 
       {/* MODAL DE AUTENTICACIÓN */}
-      <Modal 
-        show={showModal} 
-        onHide={() => setShowModal(false)} 
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
         centered
         contentClassName="bg-dark text-white border-warning"
       >
@@ -146,7 +176,7 @@ function ProductoDetalle() {
           <Button variant="outline-secondary" onClick={() => setShowModal(false)}>
             Cancelar
           </Button>
-          <Button 
+          <Button
             className="btn btn-warning fw-bold"
             onClick={() => navigate('/login')}
           >

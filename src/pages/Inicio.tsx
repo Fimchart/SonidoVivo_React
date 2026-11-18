@@ -1,11 +1,26 @@
 // src/pages/Inicio.tsx
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { productosIniciales } from '../data/Producto';
+import { productoService } from '../Service/ProductoService';
+import type { Producto } from '../data/Producto';
 import CardProducto from '../assets/components/molecules/CardProducto';
 import './Inicio.css';
 
 function Inicio() {
-  const productosDestacados = productosIniciales.slice(0, 4);
+  const [productosDestacados, setProductosDestacados] = useState<Producto[]>([]);
+
+  useEffect(() => {
+    const cargarDestacados = async () => {
+      try {
+        const lista = await productoService.getAll();
+        setProductosDestacados(lista.slice(0, 4));
+      } catch (error) {
+        console.error('Error al cargar productos destacados:', error);
+      }
+    };
+
+    cargarDestacados();
+  }, []);
 
   return (
     <main style={{ backgroundColor: '#181b20' }}>
@@ -35,25 +50,25 @@ function Inicio() {
             </div>
 
             <div className="col-lg-6 text-center position-relative">
-              <div 
+              <div
                 className="position-absolute top-50 start-50 translate-middle rounded-circle"
-                style={{ 
-                  width: '320px', 
-                  height: '320px', 
-                  backgroundColor: 'rgba(255, 193, 7, 0.15)', 
+                style={{
+                  width: '320px',
+                  height: '320px',
+                  backgroundColor: 'rgba(255, 193, 7, 0.15)',
                   filter: 'blur(90px)',
-                  zIndex: 0 
+                  zIndex: 0
                 }}
               />
-              <img 
-                src="/imagenes/Estudio_inicio.jpg" 
-                alt="Estudio de Grabación Sonido Vivo" 
+              <img
+                src="/imagenes/Estudio_inicio.jpg"
+                alt="Estudio de Grabación Sonido Vivo"
                 className="img-fluid rounded-4 shadow-lg border border-warning position-relative"
-                style={{ 
-                  maxHeight: '400px', 
-                  objectFit: 'cover', 
-                  width: '100%', 
-                  zIndex: 1 
+                style={{
+                  maxHeight: '400px',
+                  objectFit: 'cover',
+                  width: '100%',
+                  zIndex: 1
                 }}
               />
             </div>
